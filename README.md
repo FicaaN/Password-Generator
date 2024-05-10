@@ -38,3 +38,12 @@ If you wish to use the provided icon for application, or any other, follow these
 ```python
 app.iconbitmap("your-icon-filename.ico")
 ```
+
+## 🖼️**Examples**
+* **Terminal-based version**
+  
+![Screenshot_1](https://github.com/FicaaN/Password-Generator/assets/152323594/918919c7-6d08-49c1-9421-027a1c629ed8)
+
+* **GUI-based application**
+
+![Screenshot 2024-05-10 233016](https://github.com/FicaaN/Password-Generator/assets/152323594/6b4233f4-4087-42f4-8977-37a4425dd501)
