@@ -16,6 +16,7 @@ def generate_password(length: int, use_lower: bool, use_upper: bool, use_digits:
     length = max(length, 6)
 
     password = ''.join(random.choices(characters, k=length))
+    print()
     return password
 
 def main():
