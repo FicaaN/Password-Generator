@@ -14,7 +14,6 @@ def generate_password(length: int, use_lower: bool, use_upper: bool, use_digits:
         characters.extend(string.punctuation) # All the characters:  !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
 
     length = max(length, 6)
-
     password = ''.join(random.choices(characters, k=length))
     print()
     return password
@@ -26,7 +25,6 @@ def main():
     # LENGTH
     while True:
         input_length = input("Enter the length of the password: ")
-
         try:
             length = int(input_length)
             if length <= 0:

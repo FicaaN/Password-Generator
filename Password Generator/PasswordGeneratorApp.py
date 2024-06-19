@@ -25,7 +25,6 @@ def generate_password(length: int, use_lower: bool, use_upper: bool, use_digits:
         return password
 
 def generate_and_update_password():
-
     length = length_entry.get()
 
     # If user doesn't enter any length or if the length is not an integer, return
@@ -34,7 +33,6 @@ def generate_and_update_password():
         return
 
     if int(length) < 6 and int(length) > 50:
-
         clear_password()
         return
             
