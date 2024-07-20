@@ -33,10 +33,10 @@ python PasswordGeneratorApp.py
 ## 🖥️**Icon Usage**
 If you wish to use the provided icon for application, or any other, follow these steps:
 * Place the icon file in the same project folder as the PasswordGeneratorApp.
-* Navigate to line 66 in the script and remove the comment # at the beginning.
+* Navigate to line 12 in the script and remove the comment # at the beginning.
 * If you are using your own icon, put the icon file name like this:
 ```python
-app.iconbitmap("your-icon-filename.ico")
+self.app.iconbitmap("your-icon-filename.ico")
 ```
 
 ## 🖼️**Examples**
