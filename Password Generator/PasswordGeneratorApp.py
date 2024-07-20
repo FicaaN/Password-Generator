@@ -5,89 +5,99 @@ import random
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
 
-def generate_password(length: int, use_lower: bool, use_upper: bool, use_digits: bool, use_special_char: bool) -> str:
-    characters = []
+class PasswordGeneratorGUI:
+    def __init__(self):
+        self.app = customtkinter.CTk()
+        self.app.title("Password Generator")
+        #self.app.iconbitmap("password_generator_icon.ico")
+        self.app.minsize(550, 300)
+        self.app.maxsize(550, 300)
+        self.app.grid_columnconfigure(0, weight=1)
+        
+        self.setup_ui()
 
-    if use_lower:
-        characters.extend(string.ascii_lowercase)
-    if use_upper:
-        characters.extend(string.ascii_uppercase)
-    if use_digits:
-        characters.extend(string.digits)
-    if use_special_char:
-        characters.extend(string.punctuation) # All the characters:  !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+    def setup_ui(self):
+        text = customtkinter.CTkLabel(self.app, text="Password Length | Min: 6 - Max: 50", font=("Roboto", 14))
+        text.grid(row=0, column=0, columnspan=2, pady=(20, 3), sticky="nsew")
 
-    if int(length) >= 6 and int(length) <= 50:
-        password = ''.join(random.choices(characters, k=int(length)))
-        return password
-    else:
-        password = ""
-        return password
+        self.length_entry = customtkinter.CTkEntry(self.app, placeholder_text="Enter the length", justify="center")
+        self.length_entry.grid(row=1, column=0, columnspan=2, pady=(0, 10), sticky="ns")
 
-def generate_and_update_password():
-    length = length_entry.get()
+        self.lower_checkbox = customtkinter.CTkCheckBox(self.app, text="Include Lowercase")
+        self.lower_checkbox.grid(row=2, column=0, pady=(20, 10), padx=(55, 0), sticky="w")
 
-    # If user doesn't enter any length or if the length is not an integer, return
-    if not length or not length.isdigit():
-        clear_password()
-        return
+        self.upper_checkbox = customtkinter.CTkCheckBox(self.app, text="Include Uppercase")
+        self.upper_checkbox.grid(row=3, column=0, pady=(10, 10), padx=(55, 0), sticky="w")
 
-    if int(length) < 6 and int(length) > 50:
-        clear_password()
-        return
-            
-    use_lower = lower_checkbox.get()
-    use_upper = upper_checkbox.get()
-    use_digits = digits_checkbox.get()
-    use_special_char = special_checkbox.get()
+        self.digits_checkbox = customtkinter.CTkCheckBox(self.app, text="Include Digits")
+        self.digits_checkbox.grid(row=2, column=1, pady=(20, 10), padx=(0, 55), sticky="w")
 
-    # If user doesn't check any checkbox, return
-    if not any([use_lower, use_upper, use_digits, use_special_char]):
-        clear_password()
-        return
+        self.special_checkbox = customtkinter.CTkCheckBox(self.app, text="Include Special Characters")
+        self.special_checkbox.grid(row=3, column=1, pady=(10, 10), padx=(0, 55), sticky="w")
 
-    password = generate_password(length, use_lower, use_upper, use_digits, use_special_char)
+        button = customtkinter.CTkButton(self.app, text="Generate Password", command=self.generate_and_update_password)
+        button.grid(row=4, column=0, columnspan=2, pady=(10, 5), sticky="ns")
 
-    button_entry.configure(state="normal")
-    button_entry.delete(0, "end")
-    button_entry.insert(0, password)
-    button_entry.configure(state="readonly")
+        self.button_entry = customtkinter.CTkEntry(self.app, width=475, justify="center", state="readonly")
+        self.button_entry.grid(row=5, column=0, columnspan=2, pady=(5, 20), sticky="ns")
 
-def clear_password():
-    button_entry.configure(state="normal")
-    button_entry.delete(0, "end")
-    button_entry.insert(0, "")
-    button_entry.configure(state="readonly")
+    def generate_password(self, length: int, use_lower: bool, use_upper: bool, use_digits: bool, use_special_char: bool) -> str:
+        characters = []
 
-app = customtkinter.CTk()
-app.title("Password Generator")
-#app.iconbitmap("password_generator_icon.ico")
-app.minsize(550, 300)
-app.maxsize(550, 300)
-app.grid_columnconfigure(0, weight=1)
+        if use_lower:
+            characters.extend(string.ascii_lowercase)
+        if use_upper:
+            characters.extend(string.ascii_uppercase)
+        if use_digits:
+            characters.extend(string.digits)
+        if use_special_char:
+            characters.extend(string.punctuation)
 
-text = customtkinter.CTkLabel(app, text="Password Length | Min: 6 - Max: 50", font=("Roboto", 14))
-text.grid(row=0, column=0, columnspan=2, pady=(20, 3), sticky="nsew")
+        if 6 <= int(length) <= 50:
+            password = ''.join(random.choices(characters, k=int(length)))
+            return password
+        else:
+            return ""
 
-length_entry = customtkinter.CTkEntry(app, placeholder_text="Enter the length", justify="center")
-length_entry.grid(row=1, column=0, columnspan=2, pady=(0, 10), sticky="ns")
+    def generate_and_update_password(self):
+        length = self.length_entry.get()
 
-lower_checkbox = customtkinter.CTkCheckBox(app, text="Include Lowercase")
-lower_checkbox.grid(row=2, column=0, pady=(20, 10), padx=(55, 0), sticky="w")
+        if not length or not length.isdigit():
+            self.clear_password()
+            return
 
-upper_checkbox = customtkinter.CTkCheckBox(app, text="Include Uppercase")
-upper_checkbox.grid(row=3, column=0, pady=(10, 10), padx=(55, 0), sticky="w")
+        if not (6 <= int(length) <= 50):
+            self.clear_password()
+            return
+                
+        use_lower = self.lower_checkbox.get()
+        use_upper = self.upper_checkbox.get()
+        use_digits = self.digits_checkbox.get()
+        use_special_char = self.special_checkbox.get()
 
-digits_checkbox = customtkinter.CTkCheckBox(app, text="Include Digits")
-digits_checkbox.grid(row=2, column=1, pady=(20, 10), padx=(0, 55), sticky="w")
+        if not any([use_lower, use_upper, use_digits, use_special_char]):
+            self.clear_password()
+            return
 
-special_checkbox = customtkinter.CTkCheckBox(app, text="Include Special Characters")
-special_checkbox.grid(row=3, column=1, pady=(10, 10), padx=(0, 55), sticky="w")
+        password = self.generate_password(length, use_lower, use_upper, use_digits, use_special_char)
 
-button = customtkinter.CTkButton(app, text="Generate Password", command=generate_and_update_password)
-button.grid(row=4, column=0, columnspan=2, pady=(10, 5), sticky="ns")
+        self.button_entry.configure(state="normal")
+        self.button_entry.delete(0, "end")
+        self.button_entry.insert(0, password)
+        self.button_entry.configure(state="readonly")
 
-button_entry = customtkinter.CTkEntry(app, width=475, justify="center", state="readonly")
-button_entry.grid(row=5, column=0, columnspan=2, pady=(5, 20), sticky="ns")
+    def clear_password(self):
+        self.button_entry.configure(state="normal")
+        self.button_entry.delete(0, "end")
+        self.button_entry.insert(0, "")
+        self.button_entry.configure(state="readonly")
 
-app.mainloop()
+    def run(self):
+        self.app.mainloop()
+
+def run_password_generator_gui():
+    gui = PasswordGeneratorGUI()
+    gui.run()
+
+if __name__ == "__main__":
+    run_password_generator_gui()
