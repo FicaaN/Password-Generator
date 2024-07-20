@@ -47,3 +47,10 @@ self.app.iconbitmap("your-icon-filename.ico")
 * **GUI-based application**
 
 ![Screenshot 2024-05-10 233016](https://github.com/FicaaN/Password-Generator/assets/152323594/6b4233f4-4087-42f4-8977-37a4425dd501)
+
+## 🔗**Credits**
+This project makes use of the customTkinter library, developed by _Tom Schimansky_.
+
+For more information, visit:
+* [CustomTkinter Documentation](https://customtkinter.tomschimansky.com/)
+* [CustomTkinter GitHub Repository](https://github.com/tomschimansky/customtkinter)
